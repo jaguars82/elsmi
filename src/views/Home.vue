@@ -6,15 +6,20 @@
           :key="i"
           :cols="article.appearance.flex"
         >
-          <v-card>
+          <v-card hover min-height="300px">
             <v-img
+              v-if="article.appearance.showMainImg && article.appearance.mainImgSrc"
               :src="article.appearance.mainImgSrc"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
+              height="150px"
             >
               <v-card-title v-text="article.title"></v-card-title>
             </v-img>
+
+            <v-card-title v-else>{{ article.title }}</v-card-title>
+
+            <v-card-text>{{ article.description | truncate(180, '...') }}</v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
