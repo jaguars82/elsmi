@@ -22,7 +22,6 @@
             <v-card-text>{{ article.description | truncate(180, '...') }}</v-card-text>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
 
               <v-btn icon>
                 <v-icon>mdi-heart</v-icon>
@@ -35,6 +34,33 @@
               <v-btn icon>
                 <v-icon>mdi-share-variant</v-icon>
               </v-btn>
+
+              <v-spacer></v-spacer>
+              
+              <v-list>
+                <v-list-item>
+                  <v-list-item-avatar v-if="article.author.avatarSrc" size="34">
+                    <img
+                      :src="article.author.avatarSrc"
+                      :alt="article.author.name"
+                    >
+                  </v-list-item-avatar>
+                  <v-list-item-subtitle>
+                    <strong>{{ article.author.name }} {{ article.author.surname }}</strong>
+                    <br />
+                    {{ article.date }}
+                  </v-list-item-subtitle>
+                  
+                </v-list-item>
+              </v-list>
+              
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">mdi-dots-vertical</v-icon>
+                </template>
+                <span>{{ local.moreAboutTheAuthor }}</span>
+              </v-tooltip>
+
             </v-card-actions>
           </v-card>
         </v-col>
@@ -45,6 +71,9 @@
 <script>
 export default {
   computed: {
+    local () {
+      return this.$store.getters.local
+    },
     articles () {
       return this.$store.getters.articles
     }
