@@ -1,18 +1,40 @@
 const languages = {
     en: {
-       moreAboutTheAuthor: 'More about the author' 
+        language: 'English',
+        lng: 'en',
+        chooseLanguage: 'Choose your language',
+        moreAboutTheAuthor: 'More about the author' 
     },
     ru: {
+        language: 'Русский',
+        lng: 'ru',
+        chooseLanguage: 'Выберите язык',
         moreAboutTheAuthor: 'Подробнее об авторе'
     }
-} 
+}
+
+class Lang {
+    constructor (language, lng) {
+        this.language = language
+        this.lng = lng
+    }
+}
+
+const aviableLanguages = []
+Object.keys(languages).forEach(key => {
+    const lang = languages[key]
+    aviableLanguages.push(
+        new Lang(lang.language, lang.lng)
+    )
+})
     
 export default {
     state: {
-        local: languages.en
+        aviableLanguages,
+        local: languages.ru
     },
     mutations: {
-        setLanguage (state, languages, payload) {
+        setLanguage (state, payload) {
             state.local = languages[payload]
         }
     },
@@ -20,6 +42,9 @@ export default {
     getters: {
         local (state) {
             return state.local
+        },
+        aviableLanguages (state) {
+            return state.aviableLanguages
         }
     },
 }

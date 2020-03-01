@@ -4,10 +4,13 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import Vue2Filters from 'vue2-filters'
+import LangFlag from 'vue-lang-code-flags'
 
 Vue.config.productionTip = false
 
-Vue.use(Vue2Filters)
+Vue.use(Vue2Filters, LangFlag)
+
+Vue.component('lang-flag', LangFlag)
 
 new Vue({
   vuetify,

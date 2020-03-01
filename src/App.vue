@@ -27,15 +27,33 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-      <router-link to="/article">Перейти к Статье</router-link>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip left>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn
+                v-on="{ ...tooltip, ...menu }"
+                text
+              >
+              <lang-flag :iso='local.lng' />
+              <span class="ml-2">{{ local.language }}</span>
+              <v-icon>mdi-menu-down</v-icon>
+              </v-btn>
+            </template>
+            <span>{{ local.chooseLanguage }}</span>
+          </v-tooltip>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(lang, i) in aviableLanguages"
+            :key="i"
+            @click="changeLanguage(lang.lng)"
+          >
+            <v-list-item-title><lang-flag :iso='lang.lng' /><span class="ml-2">{{ lang.language }}</span></v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
     </v-app-bar>
 
     <v-content>
@@ -57,5 +75,19 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    local () {
+      return this.$store.getters.local
+    },
+    aviableLanguages () {
+      return this.$store.getters.aviableLanguages
+    }
+  },
+  methods: {
+    changeLanguage (lng) {
+      this.$store.commit('setLanguage', lng)
+    }
+  }
 };
+
 </script>
