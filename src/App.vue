@@ -27,7 +27,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-menu offset-y>
+      <v-menu offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip left>
             <template v-slot:activator="{ on: tooltip }">
@@ -43,13 +43,14 @@
             <span>{{ local.chooseLanguage }}</span>
           </v-tooltip>
         </template>
-        <v-list>
+        <v-list dense>
           <v-list-item
             v-for="(lang, i) in aviableLanguages"
             :key="i"
             @click="changeLanguage(lang.lng)"
           >
-            <v-list-item-title><lang-flag :iso='lang.lng' /><span class="ml-2">{{ lang.language }}</span></v-list-item-title>
+            <lang-flag class="mr-3" :iso='lang.lng' />
+            <v-list-item-title>{{ lang.language }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

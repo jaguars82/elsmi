@@ -3,13 +3,17 @@ const languages = {
         language: 'English',
         lng: 'en',
         chooseLanguage: 'Choose your language',
-        moreAboutTheAuthor: 'More about the author' 
+        moreAboutTheAuthor: 'More about the author',
+        viewProfile: 'View profile',
+        viewAllPublications: 'All publications'
     },
     ru: {
         language: 'Русский',
         lng: 'ru',
         chooseLanguage: 'Выберите язык',
-        moreAboutTheAuthor: 'Подробнее об авторе'
+        moreAboutTheAuthor: 'Подробнее об авторе',
+        viewProfile: 'Посмотреть профиль',
+        viewAllPublications: 'Все публикации автора'
     }
 }
 
