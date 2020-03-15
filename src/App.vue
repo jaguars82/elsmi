@@ -2,9 +2,16 @@
   <v-app>
     <v-app-bar
       app
+      clipped-left
       color="primary"
       dark
     >
+      
+      <v-btn class="ml-2" icon to="/">
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+      
+      <!--
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -24,6 +31,7 @@
           width="100"
         />
       </div>
+      -->
 
       <v-spacer></v-spacer>
 
@@ -62,6 +70,7 @@
       <router-view></router-view>
 
     </v-content>
+
   </v-app>
 </template>
 
@@ -83,7 +92,7 @@ export default {
     aviableLanguages () {
       return this.$store.getters.aviableLanguages
     }
-  },
+},
   methods: {
     changeLanguage (lng) {
       this.$store.commit('setLanguage', lng)

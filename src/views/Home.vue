@@ -64,9 +64,11 @@
                   </v-tooltip>
                 </template>
                 <v-list dense>
-                  <v-list-item>
+                  <v-list-item @click="()=>{}" :to="'/user/' + article.author.id">
+                    
                     <v-icon class="mr-3">mdi-account-details</v-icon>
                     <v-list-item-title>{{ local.viewProfile }}</v-list-item-title>
+                    
                   </v-list-item>
                   <v-list-item>
                     <v-icon class="mr-3">mdi-book-open-page-variant</v-icon>

@@ -19,6 +19,7 @@ export default {
                     name: 'Татьяна',
                     middleName: 'Сергеевна',
                     surname: 'Иванова',
+                    avatarSrc: 'http://nashamama.com/uploads/images/default/image_562711121331583598150.jpg'
                 }
             },
             {
