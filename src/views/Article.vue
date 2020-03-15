@@ -2,6 +2,7 @@
   <v-container fluid>
     
     <v-toolbar flat tag="div">
+      <m-user-badge :local="local" :article="article"></m-user-badge>
       <v-spacer></v-spacer>
       <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
     </v-toolbar>
@@ -26,6 +27,9 @@ export default {
   computed: {
     article () {
       return this.$store.getters.articleOpened
+    },
+    local () {
+      return this.$store.getters.local
     }
   }
 }
