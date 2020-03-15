@@ -1,8 +1,21 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
+  <v-container fluid>
+    
+    <v-toolbar flat tag="div">
+      <v-spacer></v-spacer>
+      <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
+    </v-toolbar>
+    
+    <v-row>
       <v-col cols="12">
-        <h1>777777777777777</h1>
+        <h1 class="text-center">{{ article.title }}</h1>
+      </v-col>
+      <v-col cols="12" class="px-0">
+        <v-parallax
+          v-if="article.appearance.showMainImg && article.appearance.mainImgSrc"
+          :src="article.appearance.mainImgSrc"
+          height="400"
+        ></v-parallax>
       </v-col>
     </v-row>
   </v-container>
@@ -10,8 +23,10 @@
 
 <script>
 export default {
-  data: () => ({
-    //
-  }),
+  computed: {
+    article () {
+      return this.$store.getters.articleOpened
+    }
+  }
 }
 </script>

@@ -4,6 +4,7 @@ const languages = {
         lng: 'en',
         chooseLanguage: 'Choose your language',
         moreAboutTheAuthor: 'More about the author',
+        open: 'open',
         viewProfile: 'View profile',
         viewAllPublications: 'All publications'
     },
@@ -12,6 +13,7 @@ const languages = {
         lng: 'ru',
         chooseLanguage: 'Выберите язык',
         moreAboutTheAuthor: 'Подробнее об авторе',
+        open: 'открыть',
         viewProfile: 'Посмотреть профиль',
         viewAllPublications: 'Все публикации автора'
     }

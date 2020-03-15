@@ -42,8 +42,29 @@ export default {
                     surname: 'Иванова',
                     avatarSrc: 'http://nashamama.com/uploads/images/default/image_562711121331583598150.jpg'
                 }
+            },
+        ],
+        articleOpened: {
+            id: '1',
+            subject: 'Русский язык',
+            type: 'Методическая разработка',
+            title: 'Заголовок 1',
+            description: 'Ясность нашей позиции очевидна: высокотехнологичная концепция общественного уклада однозначно определяет каждого участника как способного принимать собственные решения касаемо распределения внутренних резервов и ресурсов! Лишь предприниматели в сети интернет неоднозначны и будут функционально разнесены на независимые элементы. Сложно сказать, почему реплицированные с зарубежных источников, современные исследования формируют глобальную экономическую сеть и при этом - объединены в целые кластеры себе подобных!',
+            fullText: '',
+            date: '22/02/2020',
+            appearance: {
+                showMainImg: true,
+                mainImgSrc: 'https://sun9-54.userapi.com/c846221/v846221327/ba92a/WvoVAwRNchE.jpg',
+                flex: 6
+            },
+            author: {
+                id: '1',
+                name: 'Татьяна',
+                middleName: 'Сергеевна',
+                surname: 'Иванова',
+                avatarSrc: 'http://nashamama.com/uploads/images/default/image_562711121331583598150.jpg'
             }
-        ]
+        }
     },
     mutatins: {
 
@@ -54,6 +75,9 @@ export default {
     getters: {
         articles (state) {
             return state.articles
+        },
+        articleOpened (state) {
+            return state.articleOpened
         }
     }
 }
