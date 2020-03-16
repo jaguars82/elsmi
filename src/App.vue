@@ -35,14 +35,14 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text>
-        <v-icon class="mr-2">mdi-account-plus-outline</v-icon>
-        <span class="hidden-sm-and-down">{{ local.createAccount }}</span>
+      <v-btn text :icon="$vuetify.breakpoint.sm">
+        <v-icon>mdi-account-plus-outline</v-icon>
+        <span class="ml-2 hidden-sm-and-down">{{ local.createAccount }}</span>
       </v-btn>
 
-      <v-btn text>
-        <v-icon class="mr-2">mdi-login-variant</v-icon>
-        <span class="hidden-sm-and-down">{{ local.enterAccount }}</span>
+      <v-btn text :icon="$vuetify.breakpoint.sm">
+        <v-icon>mdi-login-variant</v-icon>
+        <span class="ml-2 hidden-sm-and-down">{{ local.enterAccount }}</span>
       </v-btn>
 
       <v-menu offset-y transition="slide-y-transition">
@@ -52,10 +52,11 @@
               <v-btn
                 v-on="{ ...tooltip, ...menu }"
                 text
+                :icon="$vuetify.breakpoint.sm"
               >
               <lang-flag :iso='local.lng' />
               <span class="ml-2 hidden-sm-and-down">{{ local.language }}</span>
-              <v-icon>mdi-menu-down</v-icon>
+              <v-icon class="hidden-sm-and-down">mdi-menu-down</v-icon>
               </v-btn>
             </template>
             <span>{{ local.chooseLanguage }}</span>
