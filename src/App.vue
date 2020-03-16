@@ -35,6 +35,16 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn text>
+        <v-icon class="mr-2">mdi-account-plus-outline</v-icon>
+        <span class="hidden-sm-and-down">{{ local.createAccount }}</span>
+      </v-btn>
+
+      <v-btn text>
+        <v-icon class="mr-2">mdi-login-variant</v-icon>
+        <span class="hidden-sm-and-down">{{ local.enterAccount }}</span>
+      </v-btn>
+
       <v-menu offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip left>
@@ -44,7 +54,7 @@
                 text
               >
               <lang-flag :iso='local.lng' />
-              <span class="ml-2">{{ local.language }}</span>
+              <span class="ml-2 hidden-sm-and-down">{{ local.language }}</span>
               <v-icon>mdi-menu-down</v-icon>
               </v-btn>
             </template>

@@ -4,7 +4,8 @@
         <v-col
           v-for="(article, i) in articles"
           :key="i"
-          :cols="article.appearance.flex"
+          cols="12"
+          :md="article.appearance.flex"
         >
           
           <v-hover>
@@ -32,6 +33,10 @@
 
                 <router-link v-else :to="'article/' + article.id" tag="div" class="pointer"><v-card-title>{{ article.title }}</v-card-title></router-link>
 
+                <v-card-actions>
+                  <m-user-badge :local="local" :article="article"></m-user-badge>
+                </v-card-actions>
+
                 <v-card-text>{{ article.description | truncate(180, '...') }}</v-card-text>
 
                 <v-card-actions>
@@ -43,6 +48,7 @@
                 
                 <v-card-actions>
 
+                  <!--
                   <v-btn icon>
                     <v-icon>mdi-heart</v-icon>
                   </v-btn>
@@ -54,6 +60,7 @@
                   <v-btn icon>
                     <v-icon>mdi-share-variant</v-icon>
                   </v-btn>
+                  -->
 
                   <v-spacer></v-spacer>
                   
