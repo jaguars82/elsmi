@@ -6,6 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Vue2Filters from 'vue2-filters'
 import LangFlag from 'vue-lang-code-flags'
+import RegForm from './components/User/Forms/Register.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import * as fb from 'firebase'
 
@@ -13,6 +14,7 @@ Vue.config.productionTip = false
 
 Vue.use(Vue2Filters)
 
+Vue.component('reg-form', RegForm)
 Vue.component('lang-flag', LangFlag)
 Vue.component('m-user-badge',  UserBadge)
 
