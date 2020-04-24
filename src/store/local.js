@@ -13,11 +13,20 @@ const languages = {
         password: 'Password',
         passwordConfirm: 'Confirm password',
         requiredField: 'indicates required field',
+        rulesAgree: 'I agree to the Terms and give my consent to the processing of my personal data',
         userFirstName: 'Legal first name',
         userMiddleName: 'Legal middle name',
         userLastName: 'Legal last name',
         viewProfile: 'View profile',
-        viewAllPublications: 'All publications'
+        viewAllPublications: 'All publications',
+        validation: {
+            required: 'This field is required',
+            alphabit: 'Characters only allowed',
+            email: 'This field must be a valid email',
+            passconfirmed: 'Passwords should match',
+            passlength: 'Password must be at least 6 characters',
+            passwRegex: 'You should use only characters, digits, dashes and underscores'
+        }
     },
     ru: {
         language: 'Русский',
@@ -33,11 +42,20 @@ const languages = {
         password: 'Пароль',
         passwordConfirm: 'Подтвердите пароль',
         requiredField: 'обязательное поле',
+        rulesAgree: 'Принимаю правила сайта и даю согласие на обработку персональных данных',
         userFirstName: 'Имя',
         userMiddleName: 'Отчество',
         userLastName: 'Фамилия',
         viewProfile: 'Посмотреть профиль',
-        viewAllPublications: 'Все публикации автора'
+        viewAllPublications: 'Все публикации автора',
+        validation: {
+            required: 'Это обязательное поле',
+            alphabit: 'Можно вводить только буквы',
+            email: 'Введите корректный адрес электронной почты',
+            passconfirmed: 'Пароли должны совпадать',
+            passlength: 'Пароль должен содержать не менее 6 символов',
+            passwRegex: 'Можно использовать символы латинницы, цифры, дефис и нижнее подчёркивание'
+        }
     }
 }
 

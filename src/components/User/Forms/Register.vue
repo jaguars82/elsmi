@@ -7,9 +7,10 @@
             <span class="ml-2 hidden-sm-and-down">{{ local.createAccount }}</span>
         </v-btn>
 
-        <!--<v-btn color="primary" dark v-on="on">Open Dialog</v-btn>-->
-
       </template>
+
+      <ValidationObserver ref="obs" v-slot="{ invalid, validated, passes }">
+      
       <v-card>
         <v-card-title>
           <span class="headline">{{ local.createAccountText }}</span>
@@ -18,22 +19,82 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="4">
-                <v-text-field :label="local.userFirstName + '*'" required></v-text-field>
+                <ValidationProvider mode="eager" rules="required|alpha" v-slot="{ errors, valid }">
+                  <v-text-field
+                  v-model="firstName"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.userFirstName + '*'"
+                  required
+                  ></v-text-field>
+                </ValidationProvider>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-text-field :label="local.userMiddleName + '*'" required></v-text-field>
+                <ValidationProvider mode="eager" rules="required|alpha" v-slot="{ errors, valid }">
+                  <v-text-field
+                  v-model="middleName"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.userMiddleName + '*'"
+                  required></v-text-field>
+                </ValidationProvider>
               </v-col>
               <v-col cols="12" sm="6" md="4">
-                <v-text-field :label="local.userLastName + '*'" required></v-text-field>
+                <ValidationProvider mode="eager" rules="required|alpha" v-slot="{ errors, valid }">
+                  <v-text-field
+                  v-model="lastName"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.userLastName + '*'"
+                  required></v-text-field>
+                </ValidationProvider>
               </v-col>
               <v-col cols="12">
-                <v-text-field :label="local.email + '*'" required></v-text-field>
+                <ValidationProvider mode="eager" name="email" rules="required|email"  v-slot="{ errors, valid }">
+                  <v-text-field 
+                  v-model="email"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.email + '*'" 
+                  required
+                  >
+                  </v-text-field>
+                </ValidationProvider>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-text-field :label="local.password + '*'" type="password" required></v-text-field>
+                <ValidationProvider :rules="{ required: true, regex: /^[a-zA-Z0-9_-]+$/, min: { length: 6} }" vid="confirmation" v-slot="{ errors, valid }">
+                  <v-text-field
+                  v-model="pass"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.password + '*'"
+                  type="password"
+                  required
+                  >
+                  </v-text-field>
+                </ValidationProvider>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-text-field :label="local.passwordConfirm + '*'" type="password" required></v-text-field>
+                <ValidationProvider v-slot="{ errors, valid }" rules="required|confirmed:confirmation">
+                  <v-text-field
+                  v-model="passconfirm"
+                  :error-messages="errors"
+                  :success="valid"
+                  :label="local.passwordConfirm + '*'"
+                  type="password"
+                  required
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-col>
+              <v-col cols="12">
+                <ValidationProvider :rules="{ required: { allowFalse: false } }">
+                  <v-checkbox
+                    class="smlabel"
+                    v-model="rulesAgree"
+                    :label="local.rulesAgree + '*'"
+                    required
+                  ></v-checkbox>
+                </ValidationProvider>
               </v-col>
               <!--
               <v-col cols="12" sm="6">
@@ -57,22 +118,87 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">{{ local.close }}</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">{{ local.createAccount }}</v-btn>
+          <v-btn depressed rounded @click="onClose"><span class="px-3">{{ local.close }}</span></v-btn>
+          <v-btn depressed rounded color="primary" @click="passes(submit)" :disabled="invalid || !validated"><span class="px-3">{{ local.createAccount }}</span></v-btn>
         </v-card-actions>
       </v-card>
+
+      </ValidationObserver>
+
     </v-dialog>
 </template>
 
 <script>
-  export default {
-    data: () => ({
+
+import { required, email, min, confirmed, alpha, regex } from "vee-validate/dist/rules"
+import { extend } from "vee-validate"
+
+
+export default {
+  data: () => ({
       dialog: false,
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      email: "",
+      pass: "",
+      passconfirm: "",
+      rulesAgree: false
     }),
   computed: {
-      local () {
-        return this.$store.getters.local
-      },
+    local () {
+      return this.$store.getters.local
     },
+  },
+  methods: {
+    async onClose () {
+      this.firstName = this.middleName = this.lastName = this.email = this.pass = this.passconfirm = ''
+      this.rulesAgree = null
+      requestAnimationFrame(() => {
+        this.$refs.obs.reset();
+      });
+      this.dialog = false
+    }
+  },
+  created () {
+    extend("required", {
+      ...required,
+      message: () => { return this.$store.getters.local.validation.required }
+    });
+
+    extend("min", {
+      ...min,
+      message: () => { return this.$store.getters.local.validation.passlength }
+    });
+
+    extend("email", {
+      ...email,
+      message: () => { return this.$store.getters.local.validation.email }
+    });
+    
+    extend("confirmed", {
+      ...confirmed,
+      message: () => { return this.$store.getters.local.validation.passconfirmed }
+    });
+    
+    extend("alpha", {
+      ...alpha,
+      message: () => { return this.$store.getters.local.validation.alphabit }
+    });
+    
+    extend("regex", {
+      ...regex,
+      message: () => { return this.$store.getters.local.validation.passwRegex }
+    });
+
   }
+}
 </script>
+
+<style>
+
+.smlabel .v-label {
+  font-size: 13px;
+}
+
+</style>
