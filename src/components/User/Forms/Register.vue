@@ -119,7 +119,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn depressed rounded @click="onClose"><span class="px-3">{{ local.close }}</span></v-btn>
-          <v-btn depressed rounded color="primary" @click="passes(submit)" :disabled="invalid || !validated"><span class="px-3">{{ local.createAccount }}</span></v-btn>
+          <v-btn depressed rounded color="primary" @click="passes(onSubmit)" :disabled="invalid || !validated"><span class="px-3">{{ local.createAccount }}</span></v-btn>
         </v-card-actions>
       </v-card>
 
@@ -158,6 +158,17 @@ export default {
         this.$refs.obs.reset();
       });
       this.dialog = false
+    },
+    onSubmit () {
+      const user = {
+        firstName: this.firstName,
+        middleName: this.middleName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.pass
+      }
+      //console.log(user)
+      this.$store.dispatch('registerUser', user)
     }
   },
   created () {
