@@ -1,4 +1,6 @@
 import * as fb from 'firebase'
+import aes from 'crypto-js/aes'
+//import encutf8 from 'crypto-js/enc-utf8'
 
 class User {
     constructor (firstName, middleName, lastName, email, password, avatarSrc, id) {
@@ -36,7 +38,9 @@ export default {
 
                 const user = new User(firstName, middleName, lastName, email, password, '', newUser.user.uid)
 
-                console.log(newUser.user.uid)
+                const encPassword = aes.encrypt(user.password, user.id).toString()
+                
+                user.password = encPassword
 
                 await fb.database().ref(`users/${newUser.user.uid}`).update(user)
             
@@ -56,6 +60,14 @@ export default {
             }
             // [END createwithemail]
 
+        },
+        recoverPassword () {
+               
+            // Decrypt
+            //const bytes = aes.decrypt(encPassword, userId)
+            //const originalText = bytes.toString(encutf8)
+
+            //console.log(originalText)
         }
     },
     getters: {
