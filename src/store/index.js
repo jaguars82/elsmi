@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import local from './local'
 import articles from './articles'
+import shared from './shared'
 import user from './user'
 
 Vue.use(Vuex)
@@ -11,6 +12,6 @@ export default new Vuex.Store ({
     mutations: {},
     actions: {},
     modules: {
-        local, articles, user
+        local, articles, shared, user
     }
 })
