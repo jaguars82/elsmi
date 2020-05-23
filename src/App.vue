@@ -36,17 +36,19 @@
       <v-spacer></v-spacer>
 
       <reg-form></reg-form>
+
+      <login-form></login-form>
       <!--
       <v-btn text :icon="$vuetify.breakpoint.sm">
         <v-icon>mdi-account-plus-outline</v-icon>
         <span class="ml-2 hidden-sm-and-down">{{ local.createAccount }}</span>
       </v-btn>
-      -->
+      
       <v-btn text :icon="$vuetify.breakpoint.sm">
         <v-icon>mdi-login-variant</v-icon>
         <span class="ml-2 hidden-sm-and-down">{{ local.enterAccount }}</span>
       </v-btn>
-
+      -->
       <v-menu offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on: menu }">
           <v-tooltip left>

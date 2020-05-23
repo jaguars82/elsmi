@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home'
 import Article from '@/views/Article'
 import UserProfile from '@/views/UserProfile'
+import WelcomeNewUser from '@/views/eventScreens/JustRegistered'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
         path: '/user/:id',
         name: 'user',
         component: UserProfile
+    },
+    {
+        path: '/welcome',
+        name: 'welcomeNewUser',
+        component: WelcomeNewUser
     }
 ]
 

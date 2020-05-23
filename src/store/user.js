@@ -16,17 +16,30 @@ class User {
 
 export default {
     state: {
+        userAuth: false,
+        userActive: null,
         userUnderFocus: {
             id: '1',
             name: 'Татьяна',
             middleName: 'Сергеевна',
             surname: 'Иванова',
             avatarSrc: 'http://nashamama.com/uploads/images/default/image_562711121331583598150.jpg'
+        },
+        userEventFlags: {
+            justRegistered: false
         }
     },
-    mutations: {},
+    mutations: {
+        userLogin (state, payload) {
+            state.userAuth = true
+            state.userActive = payload
+        },
+        setUserJustRegisteredFlag (state, payload) {
+            state.userEventFlags.justRegistered = payload
+        }
+    },
     actions: {
-        async registerUser (context, {firstName, middleName, lastName, email, password}) {
+        async userRegister (context, {firstName, middleName, lastName, email, password}) {
 
             try {
                 //commit('')
@@ -61,6 +74,16 @@ export default {
             // [END createwithemail]
 
         },
+        async userLogin ({commit}, payload) {
+            
+            //try {            
+                const auth = await fb.auth().signInWithEmailAndPassword(payload.email, payload.password)
+                console.log(auth)
+                commit('userLogin', auth.user.uid)
+            /*} catch (error) {
+                throw(error)
+            }*/
+        },
         recoverPassword () {
                
             // Decrypt
@@ -68,11 +91,20 @@ export default {
             //const originalText = bytes.toString(encutf8)
 
             //console.log(originalText)
+        },
+        setUserJustRegisteredFlag ({commit}, payload) {
+            commit('setUserJustRegisteredFlag', payload)
         }
     },
     getters: {
+        userActive (state) {
+            return state.userActive
+        },
         userUnderFocus (state) {
             return state.userUnderFocus
+        },
+        userJustRegisteredFlag (state) {
+            return state.userEventFlags.justRegistered
         }
     }
 }

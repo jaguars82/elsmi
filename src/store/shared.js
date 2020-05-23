@@ -2,6 +2,7 @@ export default {
     state: {
         loading: false,
         errMessage: null
+        //loginDialog: false
     },
     mutations: {
         setLoading (state, payload) {
@@ -13,6 +14,9 @@ export default {
         clearErrMessage (state) {
             state.errMessage = null
         }
+        /*setLoginDialogStatus (state, payload) {
+            state.loginDialog = payload
+        }*/
     },
     actions: {
         setLoading ({commit}, payload) {
@@ -24,6 +28,9 @@ export default {
         clearErrMessage ({commit}) {
             commit('clearErrMessage')
         }
+        /*setLoginDialogStatus ({commit}, payload) {
+            commit('setLoginDialogStatus', payload)
+        }*/
     },
     getters: {
         loading (state) {
@@ -32,5 +39,8 @@ export default {
         errMessage (state) {
             return state.errMessage
         }
+        /*loginDialog (state) {
+            return state.loginDialog
+        }*/
     }
 }

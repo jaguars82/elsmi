@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="600px" :fullscreen="$vuetify.breakpoint.xsOnly">
       <template v-slot:activator="{ on }">
         
         <v-btn text v-on="on" :icon="$vuetify.breakpoint.sm">
@@ -26,6 +26,7 @@
                   :success="valid"
                   :label="local.userFirstName + '*'"
                   required
+                  :disabled="localLoading"
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -36,7 +37,8 @@
                   :error-messages="errors"
                   :success="valid"
                   :label="local.userMiddleName + '*'"
-                  required></v-text-field>
+                  required
+                  :disabled="localLoading"></v-text-field>
                 </ValidationProvider>
               </v-col>
               <v-col cols="12" sm="6" md="4">
@@ -46,7 +48,8 @@
                   :error-messages="errors"
                   :success="valid"
                   :label="local.userLastName + '*'"
-                  required></v-text-field>
+                  required
+                  :disabled="localLoading"></v-text-field>
                 </ValidationProvider>
               </v-col>
               <v-col cols="12">
@@ -57,6 +60,7 @@
                   :success="valid"
                   :label="local.email + '*'" 
                   required
+                  :disabled="localLoading"
                   >
                   </v-text-field>
                 </ValidationProvider>
@@ -70,6 +74,7 @@
                   :label="local.password + '*'"
                   type="password"
                   required
+                  :disabled="localLoading"
                   >
                   </v-text-field>
                 </ValidationProvider>
@@ -83,6 +88,7 @@
                   :label="local.passwordConfirm + '*'"
                   type="password"
                   required
+                  :disabled="localLoading"
                   ></v-text-field>
                 </ValidationProvider>
               </v-col>
@@ -93,6 +99,7 @@
                     v-model="rulesAgree"
                     :label="local.rulesAgree + '*'"
                     required
+                    :disabled="localLoading"
                   ></v-checkbox>
                 </ValidationProvider>
               </v-col>
@@ -118,8 +125,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn depressed rounded @click="onClose"><span class="px-3">{{ local.close }}</span></v-btn>
-          <v-btn depressed rounded color="primary" @click="passes(onSubmit)" :disabled="invalid || !validated"><span class="px-3">{{ local.createAccount }}</span></v-btn>
+          <v-btn depressed rounded @click="onClose" :icon="$vuetify.breakpoint.xs" :disabled="localLoading"><v-icon :left="!$vuetify.breakpoint.xs">mdi-close</v-icon><span class="hidden-xs-only pr-2">{{ local.close }}</span></v-btn>
+          <v-btn depressed rounded color="primary" @click="passes(onSubmit)" :loading="localLoading" :disabled="invalid || !validated"><v-icon left>mdi-account-plus-outline</v-icon><span class="pr-2">{{ local.createAccount }}</span></v-btn>
         </v-card-actions>
       </v-card>
 
@@ -133,10 +140,10 @@
 import { required, email, min, confirmed, alpha, regex } from "vee-validate/dist/rules"
 import { extend } from "vee-validate"
 
-
 export default {
   data: () => ({
       dialog: false,
+      localLoading: false,
       firstName: "",
       middleName: "",
       lastName: "",
@@ -154,6 +161,7 @@ export default {
     async onClose () {
       this.firstName = this.middleName = this.lastName = this.email = this.pass = this.passconfirm = ''
       this.rulesAgree = null
+      this.localLoading = false
       requestAnimationFrame(() => {
         this.$refs.obs.reset();
       });
@@ -167,9 +175,16 @@ export default {
         email: this.email,
         password: this.pass
       }
-      //console.log(user)
-      this.$store.dispatch('registerUser', user)
-    }
+
+      this.localLoading = true
+      
+      this.$store.dispatch('userRegister', user)
+        .then(() => { 
+          this.$store.dispatch('setUserJustRegisteredFlag', true)
+          this.onClose()
+          this.$router.push({ path: '/welcome' }) 
+        })
+      }
   },
   created () {
     extend("required", {

@@ -9,6 +9,7 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import Vue2Filters from 'vue2-filters'
 import LangFlag from 'vue-lang-code-flags'
 import RegForm from './components/User/Forms/Register.vue'
+import LoginForm from './components/User/Forms/Login.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import * as fb from 'firebase'
 
@@ -19,7 +20,7 @@ Vue.use(Vue2Filters)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('reg-form', RegForm)
-Vue.component('reg-form', RegForm)
+Vue.component('login-form', LoginForm)
 Vue.component('lang-flag', LangFlag)
 Vue.component('m-user-badge',  UserBadge)
 
