@@ -34,16 +34,20 @@ export default {
             state.userAuth = true
             state.userActive = payload
         },
+        userLogOut (state) {
+            state.userAuth = false
+            state.userActive = null
+        },
         setUserJustRegisteredFlag (state, payload) {
             state.userEventFlags.justRegistered = payload
         }
     },
     actions: {
-        async userRegister (context, {firstName, middleName, lastName, email, password}) {
+        async userRegister ({commit}, {firstName, middleName, lastName, email, password}) {
 
-            try {
+            //try {
                 //commit('')
-                console.log(context)
+                //console.log(context)
                 
                 // Create user with email and pass.
                 // [START createwithemail]
@@ -56,8 +60,10 @@ export default {
                 user.password = encPassword
 
                 await fb.database().ref(`users/${newUser.user.uid}`).update(user)
+
+                commit('setUserJustRegisteredFlag', true)
             
-            } catch (error) {
+            /*} catch (error) {
 
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -70,19 +76,26 @@ export default {
                 }
                 console.log(error);
                 // [END_EXCLUDE]
-            }
+            }*/
             // [END createwithemail]
 
         },
         async userLogin ({commit}, payload) {
             
-            //try {            
+            //try {
                 const auth = await fb.auth().signInWithEmailAndPassword(payload.email, payload.password)
-                console.log(auth)
+                //console.log(auth)
                 commit('userLogin', auth.user.uid)
             /*} catch (error) {
                 throw(error)
             }*/
+        },
+        async userLogOut ({commit}) {
+          fb.auth().signOut().then(function() {
+               commit('userLogOut')
+            }).catch(function(error) {
+               console.log(error)
+            });
         },
         recoverPassword () {
                

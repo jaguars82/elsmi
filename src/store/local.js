@@ -38,6 +38,7 @@ const languages = {
                 wrongPassword: 'The password is invalid for the given email',
                 emailAlreadyInUse: 'Account with the given email address already exists',
                 weakPassword: 'The password is not strong enough',
+                operationNotAllowed: 'Operation not allowed',
                 unknown: 'Unknown error'
             }
         }
@@ -81,6 +82,7 @@ const languages = {
                 wrongPassword: 'Неверный пароль',
                 emailAlreadyInUse: 'Пользователь с этим адресом электронной почты уже существует',
                 weakPassword: 'Слишком простой (небезопасный) пароль',
+                operationNotAllowed: 'В действии отказано',
                 unknown: 'Неизвестная ошибка'
             }
         }

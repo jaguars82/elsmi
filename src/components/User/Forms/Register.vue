@@ -18,6 +18,11 @@
         <v-card-text>
           <v-container>
             <v-row>
+              <v-col cols="12">
+                <v-alert v-if="localErrorStatus" type="error" border="bottom" text>
+                  {{ local.errors.error|capitalize }}! {{ localErrorMessage }}
+                </v-alert>
+              </v-col>
               <v-col cols="12" sm="6" md="4">
                 <ValidationProvider mode="eager" rules="required|alpha" v-slot="{ errors, valid }">
                   <v-text-field
@@ -150,7 +155,9 @@ export default {
       email: "",
       pass: "",
       passconfirm: "",
-      rulesAgree: false
+      rulesAgree: false,
+      localErrorStatus: false,
+      localErrorMessage: ''
     }),
   computed: {
     local () {
@@ -159,9 +166,9 @@ export default {
   },
   methods: {
     async onClose () {
-      this.firstName = this.middleName = this.lastName = this.email = this.pass = this.passconfirm = ''
+      this.firstName = this.middleName = this.lastName = this.email = this.pass = this.passconfirm = this.localErrorMessage = ''
       this.rulesAgree = null
-      this.localLoading = false
+      this.localLoading = this.localErrorStatus = false
       requestAnimationFrame(() => {
         this.$refs.obs.reset();
       });
@@ -175,14 +182,32 @@ export default {
         email: this.email,
         password: this.pass
       }
-
       this.localLoading = true
-      
       this.$store.dispatch('userRegister', user)
         .then(() => { 
-          this.$store.dispatch('setUserJustRegisteredFlag', true)
+          //this.$store.dispatch('setUserJustRegisteredFlag', true)
           this.onClose()
           this.$router.push({ path: '/welcome' }) 
+        })
+        .catch(err => {
+          this.localErrorStatus = true
+          switch (err.code) {
+            case 'auth/invalid-email':
+              this.localErrorMessage = this.local.errors.errorCodes.invalidEmail
+              break
+            case 'auth/email-already-in-use':
+              this.localErrorMessage = this.local.errors.errorCodes.emailAlreadyInUse
+              break
+            case 'auth/weak-password':
+              this.localErrorMessage = this.local.errors.errorCodes.weakPassword
+              break
+            case 'auth/operation-not-allowed':
+              this.localErrorMessage = this.local.errors.errorCodes.operationNotAllowed
+              break
+            default:
+              this.localErrorMessage = this.local.errors.errorCodes.unknown
+          }
+          this.localLoading = false
         })
       }
   },

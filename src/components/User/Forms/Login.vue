@@ -22,6 +22,8 @@
                 <v-alert v-if="localErrorStatus" type="error" border="bottom" text>
                   {{ local.errors.error|capitalize }}! {{ localErrorMessage }}
                 </v-alert>
+              </v-col>
+              <v-col cols="12">
                 <ValidationProvider mode="eager" name="email" rules="required|email"  v-slot="{ errors, valid }">
                   <v-text-field 
                   v-model="email"
@@ -128,8 +130,6 @@ export default {
               this.localErrorMessage = this.local.errors.errorCodes.unknown
           }
           this.localLoading = false
-          //alert(err.message)
-          //console.log(err)
         })
     }
   },

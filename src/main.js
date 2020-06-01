@@ -10,6 +10,7 @@ import Vue2Filters from 'vue2-filters'
 import LangFlag from 'vue-lang-code-flags'
 import RegForm from './components/User/Forms/Register.vue'
 import LoginForm from './components/User/Forms/Login.vue'
+import LoggedInForm from './components/User/Forms/LoggedIn.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import * as fb from 'firebase'
 
@@ -21,6 +22,7 @@ Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('reg-form', RegForm)
 Vue.component('login-form', LoginForm)
+Vue.component('logged-in-form', LoggedInForm)
 Vue.component('lang-flag', LangFlag)
 Vue.component('m-user-badge',  UserBadge)
 
@@ -32,5 +34,14 @@ new Vue({
   created () {
     fb.initializeApp(Config.firebase)
     fb.analytics()
+    
+    fb.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        store.commit('userLogin', user.uid) // User is signed in
+      } else {
+        store.commit('userLogOut') // No user is signed in
+      }
+    });
+    
   } 
 }).$mount('#app')

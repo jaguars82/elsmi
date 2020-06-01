@@ -35,9 +35,11 @@
 
       <v-spacer></v-spacer>
 
-      <reg-form></reg-form>
+      <reg-form v-if="!userActive"></reg-form>
 
-      <login-form></login-form>
+      <logged-in-form v-if="userActive"></logged-in-form>
+      <login-form v-else></login-form>
+      
       <!--
       <v-btn text :icon="$vuetify.breakpoint.sm">
         <v-icon>mdi-account-plus-outline</v-icon>
@@ -90,6 +92,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
 
@@ -102,6 +105,9 @@ export default {
   computed: {
     local () {
       return this.$store.getters.local
+    },
+    userActive () {
+      return this.$store.getters.userActive
     },
     aviableLanguages () {
       return this.$store.getters.aviableLanguages
