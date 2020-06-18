@@ -1,6 +1,6 @@
 <template>
-
-  <div>
+<div>
+  <div v-if="user.id">
 
     <v-navigation-drawer clipped app permanent>
 
@@ -43,7 +43,13 @@
     </v-container>
 
   </div>
-
+  <error-info
+     v-else
+     :title="local.errors.errorInfoScreensMessages.noUserProfile.title"
+     :subtitle="local.errors.errorInfoScreensMessages.noUserProfile.subtitle"
+  >
+  </error-info>
+</div>
 </template>
 
 <script>
@@ -51,7 +57,18 @@ export default {
     computed: {
         user () {
             return this.$store.getters.userUnderFocus
+        },
+        local () {
+          return this.$store.getters.local
         }
-    }    
+    },
+    beforeCreate () {
+      //console.log(this.$route.params.id)
+      this.$store.dispatch('setUserUnderFocus', this.$route.params.id)
+
+    },
+    beforeDestroy () {
+      this.$store.commit('unsetUserUnderFocus')
+    }
 }
 </script>

@@ -40,6 +40,12 @@ const languages = {
                 weakPassword: 'The password is not strong enough',
                 operationNotAllowed: 'Operation not allowed',
                 unknown: 'Unknown error'
+            },
+            errorInfoScreensMessages: {
+                noUserProfile: {
+                    title: 'Can\'t get User\'s Profile data',
+                    subtitle: 'Probably User doesn\'t exist'
+                }
             }
         }
     },
@@ -84,6 +90,12 @@ const languages = {
                 weakPassword: 'Слишком простой (небезопасный) пароль',
                 operationNotAllowed: 'В действии отказано',
                 unknown: 'Неизвестная ошибка'
+            },
+            errorInfoScreensMessages: {
+                noUserProfile: {
+                    title: 'Не удаётся получить данные профиля',
+                    subtitle: 'Возможно, такого пользователя не существует'
+                }
             }
         }
     }

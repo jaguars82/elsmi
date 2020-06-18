@@ -35,9 +35,9 @@
 
       <v-spacer></v-spacer>
 
-      <reg-form v-if="!userActive"></reg-form>
+      <reg-form v-if="!userAuth"></reg-form>
 
-      <logged-in-form v-if="userActive"></logged-in-form>
+      <logged-in-form v-if="userAuth"></logged-in-form>
       <login-form v-else></login-form>
       
       <!--
@@ -106,8 +106,8 @@ export default {
     local () {
       return this.$store.getters.local
     },
-    userActive () {
-      return this.$store.getters.userActive
+    userAuth () {
+      return this.$store.getters.userAuth
     },
     aviableLanguages () {
       return this.$store.getters.aviableLanguages

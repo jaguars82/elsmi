@@ -35,9 +35,6 @@ export default {
     },
     methods: {
         triggerLogin () {
-            //const elem = document.getElementById('loginBtn')
-            //elem.click
-            //this.$store.dispatch('setLoginDialogStatus', true)
             eventBus.$emit('trigger-login-dialog')
         }
     },

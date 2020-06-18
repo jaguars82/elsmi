@@ -19,11 +19,11 @@ export default {
         userAuth: false,
         userActive: null,
         userUnderFocus: {
-            id: '1',
-            name: 'Татьяна',
-            middleName: 'Сергеевна',
-            surname: 'Иванова',
-            avatarSrc: 'http://nashamama.com/uploads/images/default/image_562711121331583598150.jpg'
+            id: null,
+            name: null,
+            middleName: null,
+            surname: null,
+            avatarSrc: null
         },
         userEventFlags: {
             justRegistered: false
@@ -40,6 +40,16 @@ export default {
         },
         setUserJustRegisteredFlag (state, payload) {
             state.userEventFlags.justRegistered = payload
+        },
+        setUserUnderFocus (state, payload) {
+            state.userUnderFocus.id = payload.id
+            state.userUnderFocus.name = payload.firstName
+            state.userUnderFocus.middleName = payload.middleName
+            state.userUnderFocus.surname = payload.lastName
+            state.userUnderFocus.avatarSrc = payload.avatarSrc
+        },
+        unsetUserUnderFocus (state) {
+            state.userUnderFocus.id = state.userUnderFocus.name = state.userUnderFocus.middleName = state.userUnderFocus.surname = state.userUnderFocus.avatarSrc = null
         }
     },
     actions: {
@@ -107,9 +117,23 @@ export default {
         },
         setUserJustRegisteredFlag ({commit}, payload) {
             commit('setUserJustRegisteredFlag', payload)
+        },
+        async setUserUnderFocus ({commit}, payload) {
+            //console.log(payload)
+            //console.log(commit)
+            try { 
+                const userData = await fb.database().ref('/users/' + payload).once('value')
+                const user = userData.val()
+                commit('setUserUnderFocus', user) 
+            } catch {
+                console.log('no such user')
+            }
         }
     },
     getters: {
+        userAuth (state) {
+            return state.userAuth
+        },
         userActive (state) {
             return state.userActive
         },

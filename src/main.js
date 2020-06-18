@@ -12,6 +12,7 @@ import RegForm from './components/User/Forms/Register.vue'
 import LoginForm from './components/User/Forms/Login.vue'
 import LoggedInForm from './components/User/Forms/LoggedIn.vue'
 import UserBadge from './components/User/UserBadge.vue'
+import errorInfoScreen from './components/eventScreens/onError'
 import * as fb from 'firebase'
 
 Vue.config.productionTip = false
@@ -25,6 +26,8 @@ Vue.component('login-form', LoginForm)
 Vue.component('logged-in-form', LoggedInForm)
 Vue.component('lang-flag', LangFlag)
 Vue.component('m-user-badge',  UserBadge)
+Vue.component('error-info', errorInfoScreen)
+
 
 new Vue({
   vuetify,
@@ -38,6 +41,7 @@ new Vue({
     fb.auth().onAuthStateChanged(function(user) {
       if (user) {
         store.commit('userLogin', user.uid) // User is signed in
+        //console.log(user)
       } else {
         store.commit('userLogOut') // No user is signed in
       }
