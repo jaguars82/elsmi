@@ -37,6 +37,8 @@
       <v-row>
 
         <v-col>{{ user.name }}</v-col>
+
+        <v-btn to="/publish">Опубликовать материал</v-btn>
       
       </v-row>
 

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
-import Article from '@/views/Article'
+import Article from '@/views/Publications/Article'
+import PublishForm from '@/views/Publications/PublishForm'
 import UserProfile from '@/views/UserProfile'
 import WelcomeNewUser from '@/views/eventScreens/JustRegistered'
 
@@ -17,6 +18,11 @@ const routes = [
         path: '/article/:id',
         name: 'article',
         component: Article
+    },
+    {
+        path: '/publish',
+        name: 'publish',
+        component: PublishForm
     },
     {
         path: '/user/:id',
