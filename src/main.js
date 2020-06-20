@@ -13,11 +13,14 @@ import LoginForm from './components/User/Forms/Login.vue'
 import LoggedInForm from './components/User/Forms/LoggedIn.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import errorInfoScreen from './components/eventScreens/onError'
+import VueFileAgent from 'vue-file-agent' // "Vue File Agent" drag-and-drop file uploader component
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css' // styles for "Vue File Agent"
 import * as fb from 'firebase'
 
 Vue.config.productionTip = false
 
 Vue.use(Vue2Filters)
+Vue.use(VueFileAgent, VueFileAgentStyles)
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

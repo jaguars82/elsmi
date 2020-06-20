@@ -110,6 +110,7 @@
                         <v-row>
                            <v-col cols="12">
                               <v-stepper-content step="2">
+                                 <VueFileAgent ></VueFileAgent>
                                     <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
                                     <v-btn color="primary" @click="e1 = 1">Back</v-btn>
                               </v-stepper-content>
