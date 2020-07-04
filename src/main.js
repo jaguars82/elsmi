@@ -4,7 +4,6 @@ import Config from './conf'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-//import './vee-validate'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import Vue2Filters from 'vue2-filters'
 import LangFlag from 'vue-lang-code-flags'
@@ -13,6 +12,9 @@ import LoginForm from './components/User/Forms/Login.vue'
 import LoggedInForm from './components/User/Forms/LoggedIn.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import errorInfoScreen from './components/eventScreens/onError'
+import { TiptapVuetifyPlugin } from 'tiptap-vuetify' // import WYSIWYG-editor plugin
+import 'tiptap-vuetify/dist/main.css'
+import 'vuetify/dist/vuetify.min.css'
 import VueFileAgent from 'vue-file-agent' // "Vue File Agent" drag-and-drop file uploader component
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css' // styles for "Vue File Agent"
 import * as fb from 'firebase'
@@ -20,6 +22,12 @@ import * as fb from 'firebase'
 Vue.config.productionTip = false
 
 Vue.use(Vue2Filters)
+
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify,
+  iconsGroup: 'mdi'
+})
+
 Vue.use(VueFileAgent, VueFileAgentStyles)
 
 Vue.component('ValidationProvider', ValidationProvider)
@@ -38,6 +46,7 @@ new Vue({
   store,
   render: h => h(App),
   created () {
+    
     fb.initializeApp(Config.firebase)
     fb.analytics()
     

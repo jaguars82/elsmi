@@ -1,3 +1,22 @@
+import * as fb from 'firebase'
+
+class Article {
+    constructor (authorId, title, contentType, subtitle='', description='', category='', type='', subject='', html='', tags='', fileSrc='') {
+        this.authorId = authorId
+        this.title = title
+        this.subtitle = subtitle
+        this.description = description
+        this.category = category
+        this.type = type
+        this.contentType = contentType
+        this.subject = subject
+        this.html = html
+        this.fileSrc = fileSrc
+        this.tags = tags
+    }
+}
+
+
 export default {
     state: {
         articles: [
@@ -70,6 +89,65 @@ export default {
 
     },
     actions: {
+        async articleCreate (context, payload) {
+            const article = new Article(
+                payload.authorId,
+                payload.title,
+                payload.contentType,
+                payload.subtitle,
+                payload.description,
+                payload.category,
+                payload.type,
+                payload.subject,
+                payload.html,
+                payload.tags,
+            )
+
+            const newArticle = await fb.database().ref('articles').push(article)
+
+            let fileSrc = ''
+            let fileInfo = ''
+
+            if(payload.contentType === 'file' && payload.mainFile) {
+                fileInfo = payload.mainFileInfo
+                const fileData = await fb.storage().ref(`articles/${payload.mainFile.name}`).put(payload.mainFile)
+                fileSrc = await fileData.ref.getDownloadURL().then(function(downloadURL) {
+                    return downloadURL
+                })
+            }
+
+            let imgSrc = ''
+            let imgInfo = ''
+
+            if(payload.mainImg) {
+                imgInfo = payload.mainImgInfo
+                const imgData = await fb.storage().ref(`articles/${payload.mainImg.name}`).put(payload.mainImg)
+                imgSrc = await imgData.ref.getDownloadURL().then(function(downloadURL) {
+                    return downloadURL
+                })
+            }
+
+            //let appendixFiles = []
+
+            if(payload.appndxFiles) {
+                payload.appndxFiles.forEach(async (element, i) => {
+                    const fileData = await fb.storage().ref(`articles/${element.name}`).put(element)
+                    const fileSrc = await fileData.ref.getDownloadURL().then(function(downloadURL) {
+                        return downloadURL
+                    })
+                    const appndxInfo = {url: fileSrc, size: payload.appndxFilesInfo[i].size, extention: payload.appndxFilesInfo[i].extention, type: payload.appndxFilesInfo[i].type}
+                    await fb.database().ref('articles').child(`${newArticle.key}/appendixFiles/${i}`).update(appndxInfo)
+                })
+            }
+
+            //console.log(fileSrc)
+    
+            await fb.database().ref('articles').child(newArticle.key).update({ fileSrc, fileInfo, imgSrc, imgInfo})
+    
+            console.log(context)
+            //console.log(article)
+            //console.log(newArticle)
+        }
 
     },
     getters: {

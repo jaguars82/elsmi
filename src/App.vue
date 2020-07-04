@@ -109,6 +109,9 @@ export default {
     userAuth () {
       return this.$store.getters.userAuth
     },
+    userActive () {
+      return this.$store.getters.userActive
+    },
     aviableLanguages () {
       return this.$store.getters.aviableLanguages
     }
@@ -116,6 +119,7 @@ export default {
   methods: {
     changeLanguage (lng) {
       this.$store.commit('setLanguage', lng)
+      this.$vuetify.lang.current = lng
     }
   }
 };

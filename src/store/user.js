@@ -4,12 +4,12 @@ import aes from 'crypto-js/aes'
 
 class User {
     constructor (firstName, middleName, lastName, email, password, avatarSrc, id) {
-        this.firstName = firstName,
-        this.middleName = middleName,
-        this.lastName = lastName,
-        this.email = email,
-        this.password = password,
-        this.avatarSrc = avatarSrc,
+        this.firstName = firstName
+        this.middleName = middleName
+        this.lastName = lastName
+        this.email = email
+        this.password = password
+        this.avatarSrc = avatarSrc
         this.id = id
     }
 }
@@ -95,7 +95,10 @@ export default {
             //try {
                 const auth = await fb.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 //console.log(auth)
-                commit('userLogin', auth.user.uid)
+                const dbData = await fb.database().ref('users').child(auth.user.uid).once('value')
+                const userData = dbData.val()
+                commit('userLogin', userData)
+                //commit('userLogin', auth.user.uid)
             /*} catch (error) {
                 throw(error)
             }*/

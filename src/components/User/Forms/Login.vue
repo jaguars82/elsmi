@@ -109,7 +109,7 @@ export default {
           //this.uid = this.$store.getters.userActive
           this.onClose()
           //console.log()
-          this.$router.push(`/user/${this.$store.getters.userActive}`) 
+          this.$router.push(`/user/${this.$store.getters.userActive.id}`) 
         })
         .catch (err => {
           this.localErrorStatus = true
