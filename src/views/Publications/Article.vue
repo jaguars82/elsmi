@@ -31,6 +31,9 @@ export default {
     local () {
       return this.$store.getters.local
     }
+  },
+  beforeCreate () {
+    this.$store.dispatch('setOpenedArticle', this.$route.params.id)
   }
 }
 </script>

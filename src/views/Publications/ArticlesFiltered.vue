@@ -7,15 +7,16 @@
           cols="12"
           :md="article.appearance.flex"
         >
-        
+          
           <m-article-preview :article="article" :local="local"></m-article-preview>
-
+          
         </v-col>
       </v-row>
     </v-container>
 </template>
 
 <script>
+
 export default {
   computed: {
     local () {
@@ -23,19 +24,17 @@ export default {
     },
     articles () {
       return this.$store.getters.articles
-    },
-    currAuthors () {
-      return this.$store.getters.currAuthors
     }
   },
   beforeCreate () {
-    this.$store.dispatch({type: 'fetchArticles'})
+    this.$store.dispatch(
+       'fetchArticles',
+        {
+            filterBy: this.$route.params.filter,
+            id: this.$route.params.id
+        }
+    )
   }
 }
-</script>
 
-<style scoped>
-.pointer {
-  cursor: pointer;
-}
-</style>
+</script>

@@ -10,6 +10,7 @@ import LangFlag from 'vue-lang-code-flags'
 import RegForm from './components/User/Forms/Register.vue'
 import LoginForm from './components/User/Forms/Login.vue'
 import LoggedInForm from './components/User/Forms/LoggedIn.vue'
+import ArticlePreview from './components/Publications/ArticlePreview.vue'
 import UserBadge from './components/User/UserBadge.vue'
 import errorInfoScreen from './components/eventScreens/onError'
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify' // import WYSIWYG-editor plugin
@@ -37,6 +38,7 @@ Vue.component('login-form', LoginForm)
 Vue.component('logged-in-form', LoggedInForm)
 Vue.component('lang-flag', LangFlag)
 Vue.component('m-user-badge',  UserBadge)
+Vue.component('m-article-preview',  ArticlePreview)
 Vue.component('error-info', errorInfoScreen)
 
 

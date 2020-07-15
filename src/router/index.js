@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
 import Article from '@/views/Publications/Article'
+import ArticlesFiltered from '@/views/Publications/ArticlesFiltered'
 import PublishForm from '@/views/Publications/PublishForm'
 import UserProfile from '@/views/UserProfile'
 import WelcomeNewUser from '@/views/eventScreens/JustRegistered'
@@ -18,6 +19,12 @@ const routes = [
         path: '/article/:id',
         name: 'article',
         component: Article
+    },
+    {
+        path: '/collection/:filter/:id',
+        name: 'collection',
+        component: ArticlesFiltered,
+        props: true
     },
     {
         path: '/publish',

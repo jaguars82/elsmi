@@ -394,7 +394,7 @@
 
 <script>
 
-import { required, is_not, image, size, ext } from "vee-validate/dist/rules"
+import { required, is_not, image, size } from "vee-validate/dist/rules"
 import { extend } from "vee-validate"
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 
@@ -513,6 +513,7 @@ export default {
             type: this.type,
             subject: this.subject,
             contentType: this.contentType,
+            html: this.content,
             tags: this.tags,
             mainFile,
             mainFileInfo,
@@ -539,10 +540,6 @@ export default {
     });
     extend("size", {
       ...size
-    });
-    extend("ext", {
-      ...ext,
-      message: () => { return 'разрешение' }
     });
    }
 }

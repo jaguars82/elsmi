@@ -10,6 +10,7 @@
         </v-list-item-avatar>
         <v-list-item-subtitle>
         <strong>{{ article.author.name }} {{ article.author.surname }}</strong>
+        <!--<strong>{{ author.firstName }} {{ author.lastName }}</strong>-->
         <br />
         {{ article.date }}
         </v-list-item-subtitle>
@@ -30,7 +31,7 @@
           <v-icon class="mr-3">mdi-account-details</v-icon>
           <v-list-item-title>{{ local.viewProfile }}</v-list-item-title>
         </v-list-item>
-        <v-list-item>
+        <v-list-item @click="()=>{}" :to="'/collection/user/' + article.author.id">
           <v-icon class="mr-3">mdi-book-open-page-variant</v-icon>
           <v-list-item-title>{{ local.viewAllPublications }}</v-list-item-title>
         </v-list-item>
@@ -43,6 +44,25 @@
 
 export default {
   props: ['article', 'local'],
+  /*beforeCreate () {
+    this.$store.dispatch('userInfo', this.article.author.id)
+  }
+  computed: {
+    author () {
+
+      const authId = this.article.author.id
+      
+      return this.$store.getters.currAuthors.find(author => {
+        return author.id === authId
+      })
+
+      //return this.$store.getters.currAuthors
+      
+    }
+  },
+  mounted () {
+    console.log(this.author)
+  }*/
 }
 
 </script>
