@@ -2,15 +2,28 @@ import * as fb from 'firebase'
 import aes from 'crypto-js/aes'
 //import encutf8 from 'crypto-js/enc-utf8'
 
-class User {
+/*class User {
     constructor (firstName, middleName, lastName, email, password, avatarSrc, id) {
-        this.firstName = firstName
-        this.middleName = middleName
-        this.lastName = lastName
-        this.email = email
-        this.password = password
-        this.avatarSrc = avatarSrc
-        this.id = id
+        firstName ? this.firstName = firstName : false
+        middleName ? this.middleName = middleName : false
+        lastName ? this.lastName = lastName : false
+        email ? this.email = email : false
+        password ? this.password = password : false
+        avatarSrc ? this.avatarSrc = avatarSrc : false
+        id ? this.id = id : false
+    }
+}*/
+
+class User {
+    constructor (userData) {
+        userData.firstName ? this.firstName = userData.firstName : false
+        userData.middleName ? this.middleName = userData.middleName : false
+        userData.lastName ? this.lastName = userData.lastName : false
+        userData.email ? this.email = userData.email : false
+        userData.password ? this.password = userData.password : false
+        userData.birthday ? this.birthday = userData.birthday : false
+        userData.avatarSrc ? this.avatarSrc = userData.avatarSrc : false
+        userData.id ? this.id = userData.id : false
     }
 }
 
@@ -63,7 +76,7 @@ export default {
                 // [START createwithemail]
                 const newUser = await fb.auth().createUserWithEmailAndPassword(email, password)
 
-                const user = new User(firstName, middleName, lastName, email, password, '', newUser.user.uid)
+                const user = new User({firstName, middleName, lastName, email, password, id: newUser.user.uid})
 
                 const encPassword = aes.encrypt(user.password, user.id).toString()
                 
@@ -131,6 +144,35 @@ export default {
             } catch {
                 console.log('no such user')
             }
+        },
+        async editUserProfile ({commit}, payload) {
+
+            let avatarSrc = null
+
+            if (payload.avatar) {
+                
+                const fileData = await fb.storage().ref(`profiles/${payload.id}.png`).putString(payload.avatar, 'data_url')
+
+                avatarSrc = await fileData.ref.getDownloadURL().then(function(downloadURL) {
+                    return downloadURL
+                })
+            }
+            
+            const profileUpdate = new User ({
+                firstName: payload.firstName,
+                middleName: payload.middleName,
+                lastName: payload.lastName,
+                email: payload.email,
+                password: payload.password,
+                birthday: payload.birthday,
+                avatarSrc,
+            })
+
+            await fb.database().ref('users').child(payload.id).update(profileUpdate)
+
+            profileUpdate.id = payload.id
+
+            commit('setUserUnderFocus', profileUpdate)
         }
     },
     getters: {
