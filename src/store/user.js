@@ -22,6 +22,9 @@ class User {
         userData.email ? this.email = userData.email : false
         userData.password ? this.password = userData.password : false
         userData.birthday ? this.birthday = userData.birthday : false
+        userData.gender ? this.gender = userData.gender : false
+        userData.countryCode ? this.countryCode = userData.countryCode : false
+        userData.phone ? this.phone = userData.phone : false
         userData.avatarSrc ? this.avatarSrc = userData.avatarSrc : false
         userData.id ? this.id = userData.id : false
     }
@@ -60,6 +63,11 @@ export default {
             state.userUnderFocus.middleName = payload.middleName
             state.userUnderFocus.surname = payload.lastName
             state.userUnderFocus.avatarSrc = payload.avatarSrc
+            // TO DO make a condition to load private data if user is authorized
+            state.userUnderFocus.birthday = payload.birthday
+            state.userUnderFocus.gender = payload.gender
+            state.userUnderFocus.countryCode = payload.countryCode
+            state.userUnderFocus.phone = payload.phone
         },
         unsetUserUnderFocus (state) {
             state.userUnderFocus.id = state.userUnderFocus.name = state.userUnderFocus.middleName = state.userUnderFocus.surname = state.userUnderFocus.avatarSrc = null
@@ -147,17 +155,6 @@ export default {
         },
         async editUserProfile ({commit}, payload) {
 
-            let avatarSrc = null
-
-            if (payload.avatar) {
-                
-                const fileData = await fb.storage().ref(`profiles/${payload.id}.png`).putString(payload.avatar, 'data_url')
-
-                avatarSrc = await fileData.ref.getDownloadURL().then(function(downloadURL) {
-                    return downloadURL
-                })
-            }
-            
             const profileUpdate = new User ({
                 firstName: payload.firstName,
                 middleName: payload.middleName,
@@ -165,8 +162,23 @@ export default {
                 email: payload.email,
                 password: payload.password,
                 birthday: payload.birthday,
-                avatarSrc,
+                gender: payload.gender,
+                countryCode: payload.countryCode,
+                phone: payload.phone,
             })
+            
+            if (payload.avatar) {
+
+                let avatarSrc = null
+                
+                const fileData = await fb.storage().ref(`profiles/${payload.id}.png`).putString(payload.avatar, 'data_url')
+
+                avatarSrc = await fileData.ref.getDownloadURL().then(function(downloadURL) {
+                    return downloadURL
+                })
+
+                profileUpdate.avatarSrc = avatarSrc
+            }
 
             await fb.database().ref('users').child(payload.id).update(profileUpdate)
 

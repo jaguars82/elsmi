@@ -23,9 +23,13 @@ const languages = {
         viewAllPublications: 'All publications',
         forms: {
             buttons: {
+                ok: 'OK',
+                cancel: 'cancel',
+                reset: 'сбросить',
                 continue: 'next',
                 back: 'back',
-                publishMaterial: 'publish'
+                publishMaterial: 'publish',
+                settings: 'settings'
             },
             publicationForm: {
                 formTitle: 'Publishing new material',
@@ -62,7 +66,8 @@ const languages = {
             email: 'This field must be a valid email',
             passconfirmed: 'Passwords should match',
             passlength: 'Password must be at least 6 characters',
-            passwRegex: 'You should use only characters, digits, dashes and underscores'
+            passwRegex: 'You should use only characters, digits, dashes and underscores',
+            phone: 'Enter valid phone number'
         },
         errors: {
             error: 'error',
@@ -108,9 +113,20 @@ const languages = {
         viewAllPublications: 'Все публикации автора',
         forms: {
             buttons: {
+                ok: 'ок',
+                cancel: 'отмена',
+                reset: 'сбросить',
                 continue: 'далее',
                 back: 'назад',
-                publishMaterial: 'опубликовать материал'
+                publishMaterial: 'опубликовать материал',
+                settings: 'настройки'
+            },
+            profile: {
+                profileSettings: 'Настройки профиля',
+                tabs: ['Основные сведения', 'Место работы', 'Образование', 'Контакты'],
+                birthday: 'Дата рождения',
+                countryCode: 'Код страны',
+                phone: 'Телефон',
             },
             publicationForm: {
                 formTitle: 'Публикация нового материала',
@@ -147,7 +163,8 @@ const languages = {
             email: 'Введите корректный адрес электронной почты',
             passconfirmed: 'Пароли должны совпадать',
             passlength: 'Пароль должен содержать не менее 6 символов',
-            passwRegex: 'Можно использовать символы латинницы, цифры, дефис и нижнее подчёркивание'
+            passwRegex: 'Можно использовать символы латинницы, цифры, дефис и нижнее подчёркивание',
+            phone: 'Введите корректный номер телефона'
         },
         errors: {
             error: 'ошибка',

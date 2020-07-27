@@ -10,13 +10,13 @@
       :width="$vuetify.breakpoint.sm ? 190 : 256"
     >
 
-      <div align="center" class="pt-5">
-      <v-avatar v-if="user.avatarSrc" size="200">
-        <img :src="user.avatarSrc">
-      </v-avatar>
+      <div v-if="!$vuetify.breakpoint.xs" align="center" class="pt-5">
+        <v-avatar v-if="user.avatarSrc" :size="$vuetify.breakpoint.sm ? 160 : 220">
+          <img :src="user.avatarSrc">
+        </v-avatar>
       </div>
 
-      <div class="title text-center py-3">{{ user.name }} {{ user.middleName }} {{ user.surname }}</div>
+      <div v-if="!$vuetify.breakpoint.xs" class="title text-center py-3">{{ user.name }} {{ user.middleName }} {{ user.surname }}</div>
       <!-- TODO <div class="subtitle-2 text--secondary text-center pb-2">Logged In</div> -->
       
       <ProfileEditForm :user="user"></ProfileEditForm>
@@ -45,7 +45,17 @@
     <v-container fluid>
       <v-row>
 
-        <v-col>{{ user.name }}</v-col>
+        <v-col>
+          
+          <div v-if="$vuetify.breakpoint.xs" align="center" class="pt-5">
+            <v-avatar v-if="user.avatarSrc" size="160">
+              <img :src="user.avatarSrc">
+            </v-avatar>
+          </div>
+
+          <div v-if="$vuetify.breakpoint.xs" class="title text-center py-3">{{ user.name }} {{ user.middleName }} {{ user.surname }}</div>
+          
+        </v-col>
 
         <v-btn to="/publish">Опубликовать материал</v-btn>
       
