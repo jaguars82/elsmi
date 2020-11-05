@@ -119,6 +119,7 @@ export default {
     },
     actions: {
         async articleCreate ({commit}, payload) {
+
             const article = new Article(
                 payload.authorId,
                 payload.title,
@@ -178,6 +179,8 @@ export default {
         },
         async fetchArticles ({commit}, payload) {
 
+          //commit('setLoading', true)
+
           const fetchedArticles = []
           const authors =  []
           let articlesData = null
@@ -229,7 +232,7 @@ export default {
                     authors[article.authorId].info.avatarSrc
                 )
             )
-        })
+          })
 
         //const authAmount = authors.length
 
@@ -322,7 +325,9 @@ export default {
           //console.log(JSON.stringify(authorsO))
           //console.log({}.propertyIsEnumerable.call(authorsO, 'TV8j1JaNlzVVkhrcyChNFbtUbxm1') )
           //console.log(Object.keys(authorsO))
-          
+
+          //commit('setLoading', false)
+
         },
         async setOpenedArticle ({commit}, payload) {
 

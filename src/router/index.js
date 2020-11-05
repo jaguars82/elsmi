@@ -5,6 +5,7 @@ import Article from '@/views/Publications/Article'
 import ArticlesFiltered from '@/views/Publications/ArticlesFiltered'
 import PublishForm from '@/views/Publications/PublishForm'
 import UserProfile from '@/views/UserProfile'
+import userPublications from '@/views/userProfileElements/usersPublications.vue'
 import WelcomeNewUser from '@/views/eventScreens/JustRegistered'
 
 Vue.use(VueRouter)
@@ -34,7 +35,11 @@ const routes = [
     {
         path: '/user/:id',
         name: 'user',
-        component: UserProfile
+        component: UserProfile,
+        children: [{
+            path: 'publications',
+            component: userPublications
+        }]
     },
     {
         path: '/welcome',

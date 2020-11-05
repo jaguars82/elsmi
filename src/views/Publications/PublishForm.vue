@@ -9,12 +9,17 @@
                <v-row>
                   <v-col cols="12">
 
+                     <v-toolbar extended flat tag="div">
+
                      <p
-                        class="text-h5 text-sm-h4 text-md-h3 text-lg-h2 text--secondary text-center my-5"
+                        class="text-h5 text-sm-h4 text-md-h3 text-lg-h2 text--secondary my-5"
                      >
                         {{ local.forms.publicationForm.formTitle }}
                      </p>
-                     
+                        <v-spacer></v-spacer>
+                        <v-btn icon @click="close"><v-icon>mdi-close</v-icon></v-btn>
+                     </v-toolbar>
+
                      <v-stepper-header>
                            
                         <v-stepper-step :complete="e1 > 1" step="1">{{ local.forms.publicationForm.stepNames[0] }}</v-stepper-step>
@@ -76,7 +81,7 @@
 
                                     <v-col cols="12">
                                        <v-combobox
-                                          :items="local.forms.publicationForm.subjectSelectItems"
+                                          :items="local.forms.sharedData.subjects"
                                           :label="local.forms.publicationForm.subjectSelect"
                                           v-model="subject"
                                           clearable
@@ -389,6 +394,15 @@
          <v-col cols="12"><small class="text--secondary">*{{ local.requiredField }}</small></v-col>
       </v-row>
 
+    <m-dialog-confirm
+      :model="preventCloseDialog"
+      :look="false"
+      :icon="{icon: 'mdi-alert-circle-outline'}"
+      :text="{headers: ['Публикация материала не завершена'], strings: ['Вы уверены, что хотите закрыть окно, не сохранив изменения?']}"
+      :buttons="[{action: closeUnsaved, text: 'Да'}, {action: closePreventCloseDialog, text: 'Нет'}]"
+    >
+    </m-dialog-confirm>
+
    </v-container>     
 </template>
 
@@ -442,6 +456,8 @@ export default {
          ],
          content: ``, // editor's content
          tags: [],
+         preventCloseDialog: false,
+         prevRoute: null
       }
    },
    computed: {
@@ -523,7 +539,37 @@ export default {
             appndxFilesInfo
          }
          this.$store.dispatch('articleCreate', article)
+      },
+      close () {
+         if (this.title === null
+            && this.subtitle === null
+            && this.description === null
+            && this.category === null
+            && this.type === null
+            && this.subject === null
+            && this.contentType === null) {
+               this.closeUnsaved()
+            } else {
+               this.preventCloseDialog = true
+            }
+      },
+      closePreventCloseDialog () {
+         this.preventCloseDialog = false
+      },
+      closeUnsaved () {
+         let routeNext
+         if(this.prevRoute) {
+            routeNext = this.prevRoute
+         } else {
+            routeNext = '/'
+         }
+         this.$router.push(routeNext)
       }
+   },
+   beforeRouteEnter(to, from, next) {
+      next(vm => {
+         vm.prevRoute = from
+      })
    },
    created () {
     extend("required", {

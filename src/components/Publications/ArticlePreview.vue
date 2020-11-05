@@ -8,7 +8,7 @@
             >
             <router-link
                 v-if="article.appearance.showMainImg && article.appearance.mainImgSrc"
-                :to="'article/' + article.id"
+                :to="'/article/' + article.id"
                 tag="div"
                 class="pointer"
             >
@@ -23,7 +23,7 @@
                 </v-img>
             </router-link>
 
-            <router-link v-else :to="'article/' + article.id" tag="div" class="pointer"><v-card-title>{{ article.title }}</v-card-title></router-link>
+            <router-link v-else :to="'/article/' + article.id" tag="div" class="pointer"><v-card-title>{{ article.title }}</v-card-title></router-link>
 
             <v-card-text>{{ article.description | truncate(180, '...') }}</v-card-text>
 
@@ -52,7 +52,7 @@
 
                 <v-spacer></v-spacer>
                 
-                <m-user-badge :local="local" :article="article"></m-user-badge>
+                <m-user-badge v-if="!noAuthor" :local="local" :article="article"></m-user-badge>
 
             </v-card-actions>
             </v-card>
@@ -63,6 +63,6 @@
 
 <script>
 export default {
-    props: ['article', 'local']
+    props: ['article', 'local', 'noAuthor']
 }
 </script>
